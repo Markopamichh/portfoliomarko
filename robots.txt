@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://markopamich.dev/sitemap.xml
+
+# Disallow development files
+Disallow: /scripts/
+Disallow: /styles/
+Disallow: /*.json
+Disallow: /README.md
+
+# Allow important pages
+Allow: /index.html
+Allow: /
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

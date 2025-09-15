@@ -1,0 +1,61 @@
+{
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Marko Pamich",
+    "jobTitle": "Full Stack Developer",
+    "description": "Programador Full Stack y deportista profesional de básquet. Especializado en desarrollo web moderno y experiencias digitales únicas.",
+    "url": "https://markopamich.dev",
+    "sameAs": [
+        "https://linkedin.com/in/marko-pamich",
+        "https://github.com/marko-pamich",
+        "https://instagram.com/marko.pamich"
+    ],
+    "email": "marko.pamich@email.com",
+    "telephone": "+54-9-11-1234-5678",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Buenos Aires",
+        "addressCountry": "Argentina"
+    },
+    "birthDate": "2003",
+    "nationality": "Argentine",
+    "knowsAbout": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "Python",
+        "Full Stack Development",
+        "Web Design",
+        "Basketball",
+        "Sports Performance"
+    ],
+    "hasOccupation": [
+        {
+            "@type": "Occupation",
+            "name": "Full Stack Developer",
+            "description": "Desarrollo de aplicaciones web completas, desde frontend hasta backend"
+        },
+        {
+            "@type": "Occupation",
+            "name": "Professional Basketball Player",
+            "description": "Deportista profesional de básquet de alto rendimiento"
+        }
+    ],
+    "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Universidad de Tecnología"
+    },
+    "award": [
+        "Mejor Desarrollador Junior 2024",
+        "MVP Torneo Regional Básquet 2023"
+    ],
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Professional Inquiries",
+        "email": "marko.pamich@email.com",
+        "availableLanguage": [
+            "Spanish",
+            "English"
+        ]
+    }
+}
