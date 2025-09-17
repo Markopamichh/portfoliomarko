@@ -618,9 +618,133 @@ function hideNotification(notification) {
 document.addEventListener('DOMContentLoaded', () => {
     initializeImageHandling();
     initializeProjectCards();
+    initializeContactForm();
     
     // Show welcome message
     setTimeout(() => {
         showNotification('¡Bienvenido a mi portfolio! 🚀 Explora mis proyectos haciendo clic en las tarjetas.', 'info');
     }, 1500);
 });
+
+// ===========================
+// EMAIL FUNCTIONALITY
+// ===========================
+
+// Initialize EmailJS
+function initializeEmailJS() {
+    emailjs.init("laLY4jJn7BdA0roze"); // Reemplazar con tu clave pública de EmailJS
+}
+
+// Contact form functionality
+function initializeContactForm() {
+    initializeEmailJS();
+    setupFormValidation();
+    
+    const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
+    
+    contactForm.addEventListener('submit', handleFormSubmit);
+}
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnText = submitBtn.innerHTML;
+    
+    // Deshabilitar botón y mostrar loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    
+    // Obtener datos del formulario
+    const formData = {
+        from_name: form.name.value,
+        from_email: form.email.value,
+        subject: form.subject.value,
+        message: form.message.value,
+        to_email: 'markopamich10@gmail.com'
+    };
+    
+    try {
+        // Enviar email usando EmailJS
+        const response = await emailjs.send(
+            'service_fqestir',    // Reemplazar con tu Service ID
+            'template_bhgbg9r',   // Reemplazar con tu Template ID
+            formData
+        );
+        
+        if (response.status === 200) {
+            showNotification('¡Mensaje enviado exitosamente! Te contactaré pronto.', 'success');
+            form.reset();
+        } else {
+            throw new Error('Error en el envío');
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al enviar el mensaje. Por favor, intenta de nuevo.', 'error');
+    } finally {
+        // Restaurar botón
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = btnText;
+    }
+}
+
+// Validación en tiempo real
+function setupFormValidation() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    
+    const inputs = form.querySelectorAll('input, textarea');
+    
+    inputs.forEach(input => {
+        input.addEventListener('blur', validateField);
+        input.addEventListener('input', clearValidationErrors);
+    });
+}
+
+function validateField(e) {
+    const field = e.target;
+    const value = field.value.trim();
+    
+    clearFieldError(field);
+    
+    if (!value) {
+        showFieldError(field, 'Este campo es obligatorio');
+        return false;
+    }
+    
+    if (field.type === 'email' && !isValidEmail(value)) {
+        showFieldError(field, 'Por favor, ingresa un email válido');
+        return false;
+    }
+    
+    return true;
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function showFieldError(field, message) {
+    const errorElement = document.createElement('span');
+    errorElement.className = 'field-error';
+    errorElement.textContent = message;
+    
+    field.parentNode.appendChild(errorElement);
+    field.classList.add('error');
+}
+
+function clearFieldError(field) {
+    const errorElement = field.parentNode.querySelector('.field-error');
+    if (errorElement) {
+        errorElement.remove();
+    }
+    field.classList.remove('error');
+}
+
+function clearValidationErrors(e) {
+    clearFieldError(e.target);
+}
