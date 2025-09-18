@@ -1675,9 +1675,9 @@ section {
     margin-right: 0.5rem;
 }
 
-/* Enhanced button hover effects for form submission */
+/* Enhanced button hover effects for WhatsApp form submission */
 .contact-form .btn-primary {
-    background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%);
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     border: none;
     color: white;
     font-weight: 600;
@@ -1704,9 +1704,9 @@ section {
 }
 
 .contact-form .btn-primary:hover {
-    background: linear-gradient(135deg, #0080FF 0%, #0099FF 100%);
+    background: linear-gradient(135deg, #20BA5A 0%, #0F7A6C 100%);
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(30, 144, 255, 0.3);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
 }
 
 .contact-form .btn-primary:active {

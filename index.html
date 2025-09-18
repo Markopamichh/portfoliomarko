@@ -460,9 +460,9 @@
                         <textarea id="message" name="message" rows="5" required></textarea>
                         <label for="message">Mensaje</label>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-full">
-                        Enviar Mensaje
-                        <i class="fas fa-paper-plane"></i>
+                    <button type="button" onclick="enviarAWhatsApp()" class="btn btn-primary btn-full">
+                        Enviar por WhatsApp
+                        <i class="fab fa-whatsapp"></i>
                     </button>
                 </form>
             </div>
@@ -522,7 +522,6 @@
     </footer>
 
     <!-- JavaScript -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script/main.js"></script>
 </body>
 </html>

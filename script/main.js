@@ -618,7 +618,7 @@ function hideNotification(notification) {
 document.addEventListener('DOMContentLoaded', () => {
     initializeImageHandling();
     initializeProjectCards();
-    initializeContactForm();
+    initializeContactForm(); // Solo la función simplificada
     
     // Show welcome message
     setTimeout(() => {
@@ -627,78 +627,386 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===========================
-// EMAIL FUNCTIONALITY
+// WHATSAPP FUNCTIONALITY - ULTRA SIMPLE
 // ===========================
 
-// Initialize EmailJS
-function initializeEmailJS() {
-    emailjs.init("laLY4jJn7BdA0roze"); // Reemplazar con tu clave pública de EmailJS
+// Función global ultra simple para el onclick
+function enviarAWhatsApp() {
+    console.log('🚀 Función enviarAWhatsApp() llamada');
+    
+    // Obtener valores directamente
+    const nombre = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const asunto = document.getElementById('subject').value.trim();
+    const mensaje = document.getElementById('message').value.trim();
+    
+    console.log('📝 Datos obtenidos:');
+    console.log('- Nombre:', nombre);
+    console.log('- Email:', email);
+    console.log('- Asunto:', asunto);
+    console.log('- Mensaje:', mensaje);
+    
+    // Validación super simple
+    if (!nombre || !email || !asunto || !mensaje) {
+        alert('Por favor, completa todos los campos antes de enviar.');
+        console.log('❌ Campos incompletos');
+        return;
+    }
+    
+    console.log('✅ Todos los campos completados');
+    
+    // Crear mensaje para WhatsApp
+    const textoWhatsApp = `Hola! Nueva consulta desde tu portfolio:
+    
+📝 Nombre: ${nombre}
+📧 Email: ${email}
+📋 Asunto: ${asunto}
+
+💬 Mensaje:
+${mensaje}
+
+---
+Enviado desde: ${window.location.href}`;
+    
+    // Codificar mensaje
+    const mensajeCodificado = encodeURIComponent(textoWhatsApp);
+    
+    // Crear URL de WhatsApp
+    const numeroWhatsApp = '5492996120756';
+    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+    
+    console.log('📱 URL WhatsApp:', urlWhatsApp);
+    
+    // Abrir WhatsApp
+    try {
+        window.open(urlWhatsApp, '_blank');
+        console.log('✅ WhatsApp abierto');
+        
+        // Limpiar formulario
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('subject').value = '';
+        document.getElementById('message').value = '';
+        
+        alert('¡WhatsApp abierto! Completa el envío desde la aplicación.');
+        
+    } catch (error) {
+        console.error('❌ Error al abrir WhatsApp:', error);
+        alert('Error al abrir WhatsApp. Por favor, intenta de nuevo.');
+    }
 }
 
-// Contact form functionality
+// Contact form functionality - VERSIÓN SIMPLIFICADA
 function initializeContactForm() {
-    initializeEmailJS();
-    setupFormValidation();
+    console.log('🚀 Inicializando formulario de contacto (versión simplificada)...');
     
     const contactForm = document.getElementById('contact-form');
-    if (!contactForm) return;
+    if (!contactForm) {
+        console.error('❌ No se encontró el formulario con ID "contact-form"');
+        return;
+    }
     
-    contactForm.addEventListener('submit', handleFormSubmit);
+    console.log('✅ Formulario encontrado');
+    
+    // Solo agregar el event listener, sin validación compleja
+    contactForm.addEventListener('submit', handleFormSubmitSimple);
+    console.log('✅ Event listener agregado');
 }
 
-async function handleFormSubmit(e) {
+// Función simplificada de envío - SIN validación compleja
+function handleFormSubmitSimple(e) {
     e.preventDefault();
+    console.log('📋 Formulario enviado (versión simple)');
     
     const form = e.target;
     const submitBtn = form.querySelector('button[type="submit"]');
     const btnText = submitBtn.innerHTML;
     
+    // Obtener valores directamente
+    const name = form.querySelector('#name').value || '';
+    const email = form.querySelector('#email').value || '';
+    const subject = form.querySelector('#subject').value || '';
+    const message = form.querySelector('#message').value || '';
+    
+    console.log('� Valores obtenidos:');
+    console.log('- Nombre:', name);
+    console.log('- Email:', email);
+    console.log('- Asunto:', subject);
+    console.log('- Mensaje:', message);
+    
+    // Validación SUPER simple - solo verificar que no estén completamente vacíos
+    if (!name || !email || !subject || !message) {
+        console.log('❌ Algún campo está vacío');
+        alert('Por favor completa todos los campos');
+        return;
+    }
+    
+    console.log('✅ Todos los campos tienen contenido');
+    
+    // Cambiar botón
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Abriendo WhatsApp...';
+    
+    // Crear datos
+    const formData = {
+        name: name,
+        email: email,
+        subject: subject,
+        message: message
+    };
+    
+    // Crear mensaje y abrir WhatsApp
+    setTimeout(() => {
+        try {
+            const whatsappMessage = createWhatsAppMessageSimple(formData);
+            openWhatsAppSimple(whatsappMessage);
+            
+            alert('¡WhatsApp abierto! Completa el envío desde la aplicación.');
+            form.reset();
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al abrir WhatsApp');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = btnText;
+        }
+    }, 500);
+}
+
+// Función simplificada para crear mensaje
+function createWhatsAppMessageSimple(data) {
+    const message = `Hola! Nueva consulta desde tu portfolio:
+
+Nombre: ${data.name}
+Email: ${data.email}  
+Asunto: ${data.subject}
+
+Mensaje:
+${data.message}`;
+    
+    return encodeURIComponent(message);
+}
+
+// Función simplificada para abrir WhatsApp
+function openWhatsAppSimple(message) {
+    const phoneNumber = '5492996120756';
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    console.log('📱 Abriendo WhatsApp:', whatsappURL);
+    window.open(whatsappURL, '_blank');
+}
+
+// ===========================
+// FUNCIONES DE PRUEBA GLOBALES
+// ===========================
+
+// Función ULTRA simple para probar
+window.probarWhatsApp = function() {
+    console.log('🧪 Probando WhatsApp directamente...');
+    
+    // Llenar campos
+    document.getElementById('name').value = 'Usuario Prueba';
+    document.getElementById('email').value = 'test@ejemplo.com';
+    document.getElementById('subject').value = 'Mensaje de prueba';
+    document.getElementById('message').value = 'Este es un mensaje de prueba desde la consola.';
+    
+    console.log('✅ Campos llenados');
+    
+    // Llamar función directa
+    enviarAWhatsApp();
+};
+
+// Función para probar URL directa
+window.abrirWhatsAppDirecto = function() {
+    const mensaje = 'Prueba directa desde consola';
+    const url = `https://wa.me/5492996120756?text=${encodeURIComponent(mensaje)}`;
+    console.log('🔗 Abriendo URL:', url);
+    window.open(url, '_blank');
+};
+
+// Función simple para probar desde la consola
+window.testFormularioSimple = function() {
+    console.log('🧪 Probando formulario simplificado...');
+    
+    const form = document.getElementById('contact-form');
+    if (!form) {
+        console.error('❌ Formulario no encontrado');
+        return;
+    }
+    
+    // Llenar con datos de prueba
+    form.querySelector('#name').value = 'Usuario Prueba';
+    form.querySelector('#email').value = 'test@ejemplo.com';
+    form.querySelector('#subject').value = 'Consulta de prueba';
+    form.querySelector('#message').value = 'Este es un mensaje de prueba.';
+    
+    console.log('✅ Formulario llenado con datos de prueba');
+    
+    // Enviar formulario
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+};
+
+/* 
+// FUNCIONES ANTIGUAS COMENTADAS TEMPORALMENTE
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    console.log('📋 Formulario enviado');
+    
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnText = submitBtn.innerHTML;
+    
+    // Obtener valores de campos
+    const nameValue = form.name ? form.name.value.trim() : '';
+    const emailValue = form.email ? form.email.value.trim() : '';
+    const subjectValue = form.subject ? form.subject.value.trim() : '';
+    const messageValue = form.message ? form.message.value.trim() : '';
+    
+    console.log('📝 Datos del formulario:');
+    console.log('- Nombre:', `"${nameValue}"`);
+    console.log('- Email:', `"${emailValue}"`);
+    console.log('- Asunto:', `"${subjectValue}"`);
+    console.log('- Mensaje:', `"${messageValue}"`);
+    
+    // Validación detallada
+    const errors = [];
+    
+    if (!nameValue) {
+        errors.push('Nombre es requerido');
+    }
+    
+    if (!emailValue) {
+        errors.push('Email es requerido');
+    } else if (!isValidEmail(emailValue)) {
+        errors.push('Email no es válido');
+    }
+    
+    if (!subjectValue) {
+        errors.push('Asunto es requerido');
+    }
+    
+    if (!messageValue) {
+        errors.push('Mensaje es requerido');
+    }
+    
+    if (errors.length > 0) {
+        console.log('❌ Errores encontrados:', errors);
+        showNotification(`Errores: ${errors.join(', ')}`, 'error');
+        return;
+    }
+    
+    console.log('✅ Validación pasada correctamente');
+    
     // Deshabilitar botón y mostrar loading
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparando WhatsApp...';
+    console.log('🔄 Botón deshabilitado');
     
     // Obtener datos del formulario
     const formData = {
-        from_name: form.name.value,
-        from_email: form.email.value,
-        subject: form.subject.value,
-        message: form.message.value,
-        to_email: 'markopamich10@gmail.com'
+        name: nameValue,
+        email: emailValue,
+        subject: subjectValue,
+        message: messageValue
     };
     
     try {
-        // Enviar email usando EmailJS
-        const response = await emailjs.send(
-            'service_fqestir',    // Reemplazar con tu Service ID
-            'template_bhgbg9r',   // Reemplazar con tu Template ID
-            formData
-        );
+        // Crear mensaje para WhatsApp
+        const whatsappMessage = createWhatsAppMessage(formData);
+        console.log('💬 Mensaje creado:', whatsappMessage);
         
-        if (response.status === 200) {
-            showNotification('¡Mensaje enviado exitosamente! Te contactaré pronto.', 'success');
+        // Abrir WhatsApp
+        console.log('📱 Abriendo WhatsApp...');
+        openWhatsApp(whatsappMessage);
+        
+        // Mostrar mensaje de éxito
+        setTimeout(() => {
+            showNotification('¡Redirigiendo a WhatsApp! 📱 Completa el envío desde la aplicación.', 'success');
             form.reset();
-        } else {
-            throw new Error('Error en el envío');
-        }
+            console.log('✅ Formulario reseteado');
+        }, 1000);
         
     } catch (error) {
-        console.error('Error:', error);
-        showNotification('Error al enviar el mensaje. Por favor, intenta de nuevo.', 'error');
+        console.error('❌ Error:', error);
+        showNotification('Error al abrir WhatsApp. Por favor, intenta de nuevo.', 'error');
     } finally {
         // Restaurar botón
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = btnText;
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = btnText;
+            console.log('🔄 Botón restaurado');
+        }, 2000);
     }
 }
 
-// Validación en tiempo real
+// Crear mensaje formateado para WhatsApp
+function createWhatsAppMessage(data) {
+    const message = `🌟 *Nueva consulta desde Portfolio Web*
+
+👤 *Nombre:* ${data.name}
+📧 *Email:* ${data.email}
+📋 *Asunto:* ${data.subject}
+
+💬 *Mensaje:*
+${data.message}
+
+---
+_Enviado desde portfolio web: ${window.location.href}_`;
+    
+    return encodeURIComponent(message);
+}
+
+// Abrir WhatsApp con mensaje pre-llenado
+function openWhatsApp(message) {
+    const phoneNumber = '5492996120756'; // Tu número de WhatsApp con código de país
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    console.log('📱 Número de WhatsApp:', phoneNumber);
+    console.log('🔗 URL generada:', whatsappURL);
+    
+    // Abrir en una nueva ventana/pestaña
+    try {
+        const newWindow = window.open(whatsappURL, '_blank');
+        if (newWindow) {
+            console.log('✅ WhatsApp abierto correctamente');
+        } else {
+            console.log('⚠️ Posible bloqueo de popup');
+        }
+    } catch (error) {
+        console.error('❌ Error al abrir WhatsApp:', error);
+    }
+}
+
+// Validar todos los campos del formulario
+function validateAllFields(form) {
+    let isValid = true;
+    const fields = form.querySelectorAll('input[required], textarea[required]');
+    
+    fields.forEach(field => {
+        if (!validateField({ target: field })) {
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
+// Validación en tiempo real (simplificada)
 function setupFormValidation() {
+    console.log('🔍 Configurando validación...');
+    
     const form = document.getElementById('contact-form');
-    if (!form) return;
+    if (!form) {
+        console.error('❌ No se encontró el formulario para validación');
+        return;
+    }
     
     const inputs = form.querySelectorAll('input, textarea');
+    console.log('📝 Campos encontrados:', inputs.length);
     
-    inputs.forEach(input => {
+    inputs.forEach((input, index) => {
+        console.log(`Campo ${index + 1}:`, input.name);
         input.addEventListener('blur', validateField);
         input.addEventListener('input', clearValidationErrors);
     });
@@ -708,18 +1016,23 @@ function validateField(e) {
     const field = e.target;
     const value = field.value.trim();
     
+    console.log(`🔍 Validando campo ${field.name}: "${value}"`);
+    
     clearFieldError(field);
     
     if (!value) {
+        console.log(`❌ Campo ${field.name} está vacío`);
         showFieldError(field, 'Este campo es obligatorio');
         return false;
     }
     
     if (field.type === 'email' && !isValidEmail(value)) {
+        console.log(`❌ Email ${value} no es válido`);
         showFieldError(field, 'Por favor, ingresa un email válido');
         return false;
     }
     
+    console.log(`✅ Campo ${field.name} es válido`);
     return true;
 }
 
@@ -748,3 +1061,53 @@ function clearFieldError(field) {
 function clearValidationErrors(e) {
     clearFieldError(e.target);
 }
+
+// ===========================
+// DEBUG FUNCTIONS (para usar en consola)
+// ===========================
+
+// Función para probar el formulario desde la consola
+window.testContactForm = function() {
+    console.log('🧪 Probando formulario de contacto...');
+    
+    const form = document.getElementById('contact-form');
+    if (!form) {
+        console.error('❌ Formulario no encontrado');
+        return;
+    }
+    
+    // Llenar campos con datos de prueba
+    form.name.value = 'Prueba Usuario';
+    form.email.value = 'prueba@test.com';
+    form.subject.value = 'Mensaje de prueba';
+    form.message.value = 'Este es un mensaje de prueba desde la consola.';
+    
+    console.log('✅ Campos llenados con datos de prueba');
+    console.log('🚀 Enviando formulario...');
+    
+    // Simular envío
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+};
+
+// Función para verificar el estado del formulario
+window.checkFormStatus = function() {
+    console.log('📊 Estado del formulario:');
+    
+    const form = document.getElementById('contact-form');
+    if (!form) {
+        console.error('❌ Formulario no encontrado');
+        return;
+    }
+    
+    const fields = {
+        name: form.name?.value || 'NO ENCONTRADO',
+        email: form.email?.value || 'NO ENCONTRADO',
+        subject: form.subject?.value || 'NO ENCONTRADO',
+        message: form.message?.value || 'NO ENCONTRADO'
+    };
+    
+    console.table(fields);
+    
+    return fields;
+};
+*/
